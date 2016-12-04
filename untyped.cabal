@@ -21,6 +21,8 @@ library
                        Language.LambdaCalculus.Parser
                        Language.LambdaCalculus.Parser.Common
                        Language.LambdaCalculus.Parser.Term
+                       Language.LambdaCalculus.Pretty
+                       Language.LambdaCalculus.Pretty.Term
   build-depends:       base >= 4.7 && < 5,
                        parsec -any
   default-language:    Haskell2010
