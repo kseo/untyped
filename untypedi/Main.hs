@@ -1,9 +1,6 @@
 module Main where
 
-import Language.LambdaCalculus.Context
-import Language.LambdaCalculus.Evaluator
-import Language.LambdaCalculus.Parser
-import Language.LambdaCalculus.Pretty
+import Language.LambdaCalculus
 
 import System.Console.Haskeline
 
