@@ -1,4 +1,6 @@
-module Language.LambdaCalculus.Evaluator where
+module Language.LambdaCalculus.Evaluator
+  ( eval
+  ) where
 
 import Language.LambdaCalculus.AST
 import Language.LambdaCalculus.Context
