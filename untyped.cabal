@@ -18,6 +18,7 @@ library
   exposed-modules:     Language.LambdaCalculus.AST
                        Language.LambdaCalculus.AST.Term
                        Language.LambdaCalculus.Context
+                       Language.LambdaCalculus.Evaluator
                        Language.LambdaCalculus.Parser
                        Language.LambdaCalculus.Parser.Common
                        Language.LambdaCalculus.Parser.Term

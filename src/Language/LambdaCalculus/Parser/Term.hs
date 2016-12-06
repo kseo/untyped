@@ -10,6 +10,7 @@ import Language.LambdaCalculus.Parser.Common
 import Text.Parsec
 import Text.Parsec.Combinator (between, sepBy1, chainr1)
 
+type BoundContext = [String]
 type LCParser = Parsec String BoundContext Term
 
 parseVarName :: Parsec String u String

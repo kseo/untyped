@@ -3,21 +3,7 @@ module Language.LambdaCalculus.Pretty.Term
   ) where
 
 import Language.LambdaCalculus.AST
-
-data Binding = NameBind deriving (Show)
-
-type Context = [(String, Binding)]
-
-ctxLength :: Context -> Int
-ctxLength = length
-
-indexToName :: Context -> Int -> String
-indexToName ctx n = fst $ ctx !! n
-
-pickFreshName :: Context -> String -> (Context, String)
-pickFreshName ctx x
-  | x `elem` map fst ctx = pickFreshName ctx $ x ++ "'"
-  | otherwise = ((x, NameBind) : ctx , x)
+import Language.LambdaCalculus.Context
 
 printTm :: Context -> Term -> String
 printTm ctx t = case t of
