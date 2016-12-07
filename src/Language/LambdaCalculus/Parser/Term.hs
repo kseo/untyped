@@ -4,24 +4,23 @@ module Language.LambdaCalculus.Parser.Term
 
 -- | See http://mattwetmore.me/posts/parsing-combinators-with-parser-combinators.html
 import Data.List (elemIndex)
+
 import Language.LambdaCalculus.AST
 import Language.LambdaCalculus.Context
 import Language.LambdaCalculus.Parser.Common
+
 import Text.Parsec
 import Text.Parsec.Combinator (between, sepBy1, chainr1)
 
 type BoundContext = [String]
 type LCParser = Parsec String BoundContext Term
 
-parseVarName :: Parsec String u String
-parseVarName = many1 $ letter <|> char '\''
-
 parseAbs :: LCParser -> LCParser
 parseAbs termParser = do
-  char '\\'
-  v <- parseVarName
+  reservedOp "\\"
+  v <- identifier
   modifyState (v :)
-  char '.'
+  reservedOp "."
   term <- termParser
   modifyState tail
   pos <- getPosition
@@ -29,7 +28,7 @@ parseAbs termParser = do
 
 parseVar :: LCParser
 parseVar = do
-  v <- parseVarName
+  v <- identifier
   list <- getState
   findVar v list
 
@@ -40,9 +39,6 @@ findVar v list = case elemIndex v list of
     pos <- getPosition
     return $ TmVar (infoFrom pos) n (length list)
 
-parens :: Parsec String u a -> Parsec String u a
-parens = between (char '(') (char ')')
-
 parseNonApp :: LCParser
 parseNonApp =  parens parseTerm   -- (M)
            <|> parseAbs parseTerm -- $\lambda$x.M
@@ -50,7 +46,7 @@ parseNonApp =  parens parseTerm   -- (M)
 
 parseTerm :: LCParser
 parseTerm = chainl1 parseNonApp $ do
-  space
+  whiteSpace
   pos <- getPosition
   return $ TmApp (infoFrom pos)
 
@@ -58,4 +54,4 @@ parseWith :: Parsec String [u] a -> String -> Either ParseError a
 parseWith p = runParser p [] "untyped lambda-calculus"
 
 parseLC :: String -> Either ParseError Term
-parseLC = parseWith parseTerm
+parseLC = parseWith (whiteSpace >> parseTerm)
