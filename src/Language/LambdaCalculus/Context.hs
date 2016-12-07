@@ -1,6 +1,6 @@
 module Language.LambdaCalculus.Context
   ( Binding(..)
-  , Context(..)
+  , Context
   , ctxLength
   , indexToName
   , pickFreshName

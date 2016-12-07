@@ -18,7 +18,7 @@ termSubst j s = walk 0
     where walk c t = case t of
                       (TmAbs fi x t1)   -> TmAbs fi x (walk (c + 1) t1)
                       (TmApp fi t1 t2)  -> TmApp fi (walk c t1) (walk c t2)
-                      (TmVar fi x n)    -> if x == j + c then termShift c s
+                      (TmVar _ x _)     -> if x == j + c then termShift c s
                                                          else t
 termSubstTop :: Term -> Term -> Term
 termSubstTop s t = termShift (-1) (termSubst 0 (termShift 1 s) t)
@@ -29,7 +29,7 @@ isVal _ _ = False
 
 eval1 :: Context -> Term -> Maybe Term
 eval1 ctx t = case t of
-                (TmApp _ (TmAbs _ x t12) v2) | isVal ctx v2 ->
+                (TmApp _ (TmAbs _ _ t12) v2) | isVal ctx v2 ->
                   return $ termSubstTop v2 t12
                 (TmApp fi v1 t2) | isVal ctx v1 -> do
                   t2' <- eval1 ctx t2

@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-missing-signatures #-}
+
 module Language.LambdaCalculus.Parser.Common
   ( infoFrom
   , parens
