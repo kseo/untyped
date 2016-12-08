@@ -9,4 +9,7 @@ data Term =
   | TmApp Info Term Term
   deriving (Show)
 
-data Info = Info { row :: Int, col :: Int } deriving (Show)
+data Info = Info { row :: Int, col :: Int }
+
+instance Show Info where
+  show (Info r c) = "(" ++ show r ++ "," ++ show c ++ ")"
