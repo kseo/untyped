@@ -6,7 +6,6 @@ module Language.LambdaCalculus.Parser.Term
 import Data.List (elemIndex)
 
 import Language.LambdaCalculus.AST
-import Language.LambdaCalculus.Context
 import Language.LambdaCalculus.Parser.Common
 
 import Text.Parsec
