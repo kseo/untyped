@@ -16,10 +16,10 @@ type LCParser = Parsec String BoundContext Term
 parseAbs :: LCParser -> LCParser
 parseAbs termParser = do
   pos <- getPosition
-  reservedOp "\\"
+  _ <- backslash
   v <- identifier
   modifyState (v :)
-  reservedOp "."
+  _ <- dot
   term <- termParser
   modifyState tail
   return $ TmAbs (infoFrom pos) v term

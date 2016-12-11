@@ -7,6 +7,8 @@ module Language.LambdaCalculus.Parser.Common
   , reserved
   , reservedOp
   , whiteSpace
+  , backslash
+  , dot
   ) where
 
 import Language.LambdaCalculus.AST
@@ -22,7 +24,6 @@ lcDef :: LanguageDef st
 lcDef = emptyDef
   { P.identStart      = letter
   , P.identLetter     = letter <|> char '\''
-  , P.reservedOpNames = [".", "\\"]
   }
 
 lexer       = P.makeTokenParser lcDef
@@ -31,3 +32,5 @@ identifier  = P.identifier lexer
 reserved    = P.reserved lexer
 reservedOp  = P.reservedOp lexer
 whiteSpace  = P.whiteSpace lexer
+backslash   = P.symbol lexer "\\"
+dot         = P.dot lexer
