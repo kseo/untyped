@@ -14,7 +14,7 @@ An implementation of untyped lambda calculus in Haskell
 
 # Implementation Details
 
-* The representation of a variable is a number - its De Bruijn index
+* The representation of a variable is a number - its De Brujin index
 * Evaluation performs substitution
 * Pretty printer removes redundant parenthesis
 
