@@ -1,7 +1,9 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
 module Language.LambdaCalculus.Parser.Common
-  ( infoFrom
+  ( BoundContext
+  , LCParser
+  , infoFrom
   , parens
   , identifier
   , reserved
@@ -34,3 +36,6 @@ reservedOp  = P.reservedOp lexer
 whiteSpace  = P.whiteSpace lexer
 backslash   = P.symbol lexer "\\"
 dot         = P.dot lexer
+
+type BoundContext = [String]
+type LCParser a = Parsec String BoundContext a

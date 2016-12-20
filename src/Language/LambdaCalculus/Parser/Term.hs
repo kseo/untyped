@@ -10,39 +10,36 @@ import Language.LambdaCalculus.Parser.Common
 
 import Text.Parsec
 
-type BoundContext = [String]
-type LCParser = Parsec String BoundContext Term
-
-parseAbs :: LCParser -> LCParser
-parseAbs termParser = do
+parseAbs :: LCParser Term
+parseAbs = do
   pos <- getPosition
   _ <- backslash
   v <- identifier
   modifyState (v :)
   _ <- dot
-  term <- termParser
+  term <- parseTerm
   modifyState tail
   return $ TmAbs (infoFrom pos) v term
 
-parseVar :: LCParser
+parseVar :: LCParser Term
 parseVar = do
   v <- identifier
   list <- getState
   findVar v list
 
-findVar :: String -> BoundContext -> LCParser
+findVar :: String -> BoundContext -> LCParser Term
 findVar v list = case elemIndex v list of
   Nothing -> fail $ "The variable " ++ v ++ " has not been bound"
   Just n  -> do
     pos <- getPosition
     return $ TmVar (infoFrom pos) n (length list)
 
-parseNonApp :: LCParser
+parseNonApp :: LCParser Term
 parseNonApp =  parens parseTerm   -- (M)
-           <|> parseAbs parseTerm -- $\lambda$x.M
+           <|> parseAbs           -- $\lambda$x.M
            <|> parseVar           -- x
 
-parseTerm :: LCParser
+parseTerm :: LCParser Term
 parseTerm = chainl1 parseNonApp $ do
   whiteSpace
   pos <- getPosition
