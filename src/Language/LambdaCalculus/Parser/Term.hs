@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
+
 module Language.LambdaCalculus.Parser.Term
   ( parseLC
   ) where
@@ -13,10 +15,10 @@ import Text.Parsec
 parseAbs :: LCParser Term
 parseAbs = do
   pos <- getPosition
-  _ <- backslash
+  backslash
   v <- identifier
   modifyState (v :)
-  _ <- dot
+  dot
   term <- parseTerm
   modifyState tail
   return $ TmAbs (infoFrom pos) v term
