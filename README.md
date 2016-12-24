@@ -8,9 +8,9 @@ An implementation of untyped lambda calculus in Haskell
 
 # Syntax
 
-* Variables: x
-* Applications: x x
-* Lambda abstractions: \x.x
+* Variables: `x`
+* Applications: `x x`
+* Lambda abstractions: `\x.x`
 
 # Implementation Details
 
